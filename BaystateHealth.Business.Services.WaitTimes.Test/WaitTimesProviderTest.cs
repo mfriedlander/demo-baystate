@@ -1,4 +1,5 @@
-﻿using BaystateHealth.Business.Services.WaitTimes.Rss;
+﻿using BaystateHealth.Business.Services.Cache.Mock;
+using BaystateHealth.Business.Services.WaitTimes.Rss;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace BaystateHealth.Business.Services.WaitTimes.Test
         {
             // Normally handled via dependecy injection
             //_provider = new Mock.MockWaitTimeProvider();
-            _provider = new RssWaitTimeProvider();
+            _provider = new RssWaitTimeProvider(new MockCache());
             VALIDKEY = "1";
             INVALIDKEY = "999";
         }

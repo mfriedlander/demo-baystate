@@ -1,4 +1,5 @@
-﻿using BaystateHealth.Business.Services.WaitTimes.Rss.Configuration;
+﻿using BaystateHealth.Business.Services.Cache;
+using BaystateHealth.Business.Services.WaitTimes.Rss.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,11 +8,15 @@ namespace BaystateHealth.Business.Services.WaitTimes.Rss
 {
     public class RssWaitTimeProvider : IWaitTimeProvider
     {
+        private readonly string CACHE_PREFIX;
         private ConfigurationSection _configuration;
+        private ICache _cache;
 
-        public RssWaitTimeProvider()
+        public RssWaitTimeProvider(ICache cache)
         {
+            CACHE_PREFIX = "RssWaitTimeProvider:Facility:";
             _configuration = ConfigurationSection.Create();
+            _cache = cache;
         }
 
         public WaitTime GetWaitTime(object locationKey)
@@ -36,15 +41,24 @@ namespace BaystateHealth.Business.Services.WaitTimes.Rss
 
         private WaitTime GetWaitTime(LocationElement element)
         {
-            // Use element.Url to get wait time properties for this element
+            // Calculate cache key
+            string cacheKey = CACHE_PREFIX + element.Key;
 
-            WaitTime waitTime = new WaitTime()
+            // If it's not in cache, add it
+            if (!_cache.Contains(cacheKey))
             {
-                Key = element.Key
-                // Duration = results.Duration
-            };
+                // TODO: implementation of wait time retreival
+                WaitTime waitTime = new WaitTime()
+                {
+                    Key = element.Key,
+                    Duration = new TimeSpan(0, 4, 0)
+                };
 
-            return waitTime;
+                // Add to cache; NOTE: duration can come from config
+                _cache.Add<WaitTime>(cacheKey, waitTime, new TimeSpan(0, 10, 0));
+            }
+
+            return _cache.Select<WaitTime>(cacheKey);
         }
     }
 }

@@ -33,6 +33,7 @@
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -42,6 +43,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Cache\Http\HttpCache.cs" />
+    <Compile Include="Services\Cache\ICache.cs" />
+    <Compile Include="Services\Cache\Mock\MockCache.cs" />
     <Compile Include="Services\WaitTimes\IWaitTimeProvider.cs" />
     <Compile Include="Services\WaitTimes\Mock\MockWaitTimeProvider.cs" />
     <Compile Include="Services\WaitTimes\Rss\Configuration\ConfigurationSection.cs" />
