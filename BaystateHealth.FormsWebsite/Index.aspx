@@ -1,0 +1,25 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Index.aspx.cs" Inherits="BaystateHealth.FormsWebsite.Index" %>
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+</head>
+<body>
+    <input type="button" id="submit" value="Submit" />
+    <div id="target"> 
+    </div>
+
+    <script type="text/javascript">
+        $('#submit').click(function (e) {
+            e.preventDefault();
+            $('#target').load('/controls/menu.ascx');
+        });
+    </script>
+</body>
+</html>
+
